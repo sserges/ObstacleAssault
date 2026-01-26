@@ -10,12 +10,17 @@ AMovingPlatform::AMovingPlatform()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void MyTestFunction()
+{
+	UE_LOG(LogTemp, Display, TEXT("My TestFunction is called!!!!"));
+}
+
 // Called when the game starts or when spawned
 void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	MyTestFunction();
 
 }
 
