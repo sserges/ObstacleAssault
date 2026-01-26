@@ -10,9 +10,10 @@ AMovingPlatform::AMovingPlatform()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void MyTestFunction()
+void MyTestFunction(float MyFloatParam, FString MyStringParam)
 {
-	UE_LOG(LogTemp, Display, TEXT("My TestFunction is called!!!!"));
+	UE_LOG(LogTemp, Display, TEXT("MyFloatParam is %f"), MyFloatParam);
+	UE_LOG(LogTemp, Display, TEXT("MyStringParam is %s"), *MyStringParam);
 }
 
 // Called when the game starts or when spawned
@@ -20,7 +21,8 @@ void AMovingPlatform::BeginPlay()
 {
 	Super::BeginPlay();
 
-	MyTestFunction();
+	FString MyName = GetName();
+	MyTestFunction(3.5f, MyName);
 
 }
 
