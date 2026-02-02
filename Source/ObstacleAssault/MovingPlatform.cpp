@@ -24,6 +24,8 @@ void AMovingPlatform::BeginPlay()
 	FString MyName = GetName();
 	MyTestFunction(3.5f, MyName);
 
+	StartLocation = GetActorLocation();
+
 }
 
 // Called every frame
@@ -40,6 +42,8 @@ void AMovingPlatform::MovePlatform(float DeltaTime)
 	CurrentLocation = CurrentLocation + (PlatformVelocity * DeltaTime);
 
 	SetActorLocation(CurrentLocation);
+
+	DistanceMoved = FVector::Dist(StartLocation, CurrentLocation);
 }
 
 void AMovingPlatform::RotatePlatform(float DeltaTime)
