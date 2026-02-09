@@ -10,10 +10,12 @@ AMovingPlatform::AMovingPlatform()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void MyTestFunction(float MyFloatParam, FString MyStringParam)
+int MyTestFunction(float MyFloatParam, FString MyStringParam)
 {
 	UE_LOG(LogTemp, Display, TEXT("MyFloatParam is %f"), MyFloatParam);
 	UE_LOG(LogTemp, Display, TEXT("MyStringParam is %s"), *MyStringParam);
+
+	return 40;
 }
 
 // Called when the game starts or when spawned
@@ -22,7 +24,8 @@ void AMovingPlatform::BeginPlay()
 	Super::BeginPlay();
 
 	FString MyName = GetName();
-	MyTestFunction(3.5f, MyName);
+	int ReturnValue = MyTestFunction(3.5f, MyName);
+	UE_LOG(LogTemp, Display, TEXT("Return value is %d"), ReturnValue);
 
 	StartLocation = GetActorLocation();
 
@@ -38,12 +41,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 
 void AMovingPlatform::MovePlatform(float DeltaTime)
 {
-	FVector CurrentLocation = GetActorLocation();
-	CurrentLocation = CurrentLocation + (PlatformVelocity * DeltaTime);
 
-	SetActorLocation(CurrentLocation);
-
-	DistanceMoved = FVector::Dist(StartLocation, CurrentLocation);
+	DistanceMoved = GetDistanceMoved();
 
 	if (DistanceMoved >= MoveDistance)
 	{
@@ -58,9 +57,20 @@ void AMovingPlatform::MovePlatform(float DeltaTime)
 
 		PlatformVelocity = -PlatformVelocity;
 	}
+	else {
+		FVector CurrentLocation = GetActorLocation();
+		CurrentLocation = CurrentLocation + (PlatformVelocity * DeltaTime);
+
+		SetActorLocation(CurrentLocation);
+	}
 }
 
 void AMovingPlatform::RotatePlatform(float DeltaTime)
 {
 	// Rotate the platform
+}
+
+float AMovingPlatform::GetDistanceMoved()
+{
+	return FVector::Dist(StartLocation, GetActorLocation());
 }
